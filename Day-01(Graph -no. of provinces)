@@ -1,0 +1,57 @@
+# Intuition
+<!-- Describe your first thoughts on how to solve this problem. -->its  a non connected graph so traversal is important so doing dfs traversal and making adjacency list is all what is needed to be done.
+
+# Approach
+<!-- Describe your approach to solving the problem. -->dfs traversal and its count and keeping a visited array as graph is non connected and also while creating adjacency list i used i!=j so as to avoid self nodes.
+
+# Complexity
+- Time complexity:
+<!-- Add your time complexity here,O(n)+o(v+2e)
+
+- Space complexity:
+<!-- Add your space complexity here, e.g. o(n)+o(n) for adjls and recursion stack space.
+
+# Code
+```
+class Solution {
+    private:
+    void dfs(vector<int> adjls[],int node,int vis[]){
+        vis[node]=1;
+        for (auto it : adjls[node]){
+         if(!vis[it]){
+             dfs(adjls,it,vis);
+         }
+        }
+      
+    }
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n=isConnected.size();
+          int vis[n];
+          for(int i=0;i<n;i++){
+              vis[i]=0;
+          }
+        vector<int> adjls[n];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if((i!=j)&& (isConnected[i][j]==1)){ 
+                adjls[i].push_back(j);
+                adjls[j].push_back(i);
+                }
+            }
+        }
+        int c=0;
+      
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+                c++;
+                dfs(adjls,i,vis);
+            }
+        }
+       
+
+               
+        return c;
+    }
+};
+```
